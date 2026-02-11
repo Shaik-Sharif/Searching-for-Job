@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Apply for Job</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="apply-container">
+    <h2>Apply for Job</h2>
+
+    <form id="applyForm" enctype="multipart/form-data">
+        <input type="hidden" id="jobId" name="jobId" />
+
+        <div class="form-group">
+            <label>Name</label>
+            <input type="text" id="name" name="name" required />
+        </div>
+
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="email" name="email" required />
+        </div>
+
+        <div class="form-group">
+            <label>Phone</label>
+            <input type="text" id="phone" name="phone" required />
+        </div>
+
+        <div class="form-group">
+            <label>Why should we hire you?</label>
+            <textarea id="message" name="message" required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Upload Resume (PDF / DOC / DOCX)</label>
+            <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" required />
+        </div>
+
+        <button type="submit" class="apply-submit-btn">Submit Application</button>
+    </form>
+</div>
+
+<!-- SUCCESS POPUP -->
+<div id="successPopup" class="success-popup">
+    <div class="success-popup-box">
+        <p>Application Submitted Successfully!</p>
+        <button id="goBackBtn" class="go-back-btn">Go Back</button>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    // Read Job ID from URL
+    const params = new URLSearchParams(window.location.search);
+    const jobId = params.get("jobId");
+
+    if (!jobId) {
+        alert("Invalid job link (missing Job ID)");
+        return;
+    }
+
+    document.getElementById("jobId").value = jobId;
+
+    const form = document.getElementById("applyForm");
+    const popup = document.getElementById("successPopup");
+    const backBtn = document.getElementById("goBackBtn");
+
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(form);
+
+        const res = await fetch("http://localhost:5050/api/apply", {
+            method: "POST",
+            body: formData
+        });
+
+        const data = await res.json();
+
+        if (data.message) {
+            alert(`Application Submitted!\nYour Application No: ${data.applicationNumber}`);
+            popup.style.display = "flex";
+            form.reset();
+        } else {
+            alert(data.error || "Something went wrong");
+        }
+    });
+
+    backBtn.addEventListener("click", () => window.history.back());
+});
+</script>
+
+</body>
+</html>
+
+
+
+

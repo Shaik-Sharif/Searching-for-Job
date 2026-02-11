@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="auth-page">
+
+<div class="login-box">
+    <h2 class="auth-title">Login</h2>
+
+    <form id="userLoginForm">
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="password" id="password" placeholder="Password" required>
+
+        <button type="submit" class="auth-btn">Login</button>
+    </form>
+
+    <a href="register.html" class="register-link">Create an account</a>
+</div>
+
+
+<script>
+document.getElementById("userLoginForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+
+    const res = await fetch("/api/user/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password })
+    });
+
+    const data = await res.json();
+
+    if (data.token) {
+        // Save JWT token
+        localStorage.setItem("userToken", data.token);
+
+        alert("Login successful!");
+
+        // Redirect user after login
+        window.location.href = "index.html";  // change this if needed
+    } else {
+        alert(data.error || "Invalid login");
+    }
+});
+</script>
+
+</body>
+</html>

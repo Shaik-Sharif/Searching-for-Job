@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Details</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+<section id="updateDetail" class="update-details-section">
+
+</section>
+
+<script>
+async function loadDetails() {
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+
+    const res = await fetch("updates.json");
+    const data = await res.json();
+    
+    const update = data.find(u => u.id == id);
+
+    const container = document.getElementById("updateDetail");
+
+    container.innerHTML = `
+        <h2>${update.title}</h2>
+        <p class="update-date">${update.date}</p>
+        <p class="update-cat">${update.category}</p>
+        <p class="update-desc">${update.description}</p>
+
+        ${update.pdf ? 
+            `<a href="${update.pdf}" target="_blank" class="btn">Download PDF</a>` 
+            : ""}
+
+        <br><br>
+        <a href="updates.html" class="btn">Back to Updates</a>
+    `;
+}
+
+loadDetails();
+</script>
+<footer class="footer-section">
+    <div class="footer-container">
+
+
+        <div class="footer-column">
+            <h3>Contact Information</h3>
+            <p><strong>Project Director,</strong><br>
+            VIKASA, Collectorate,<br>
+            VIJAYAWADA<br>
+            NTR District,<br>
+            Andhra Pradesh.</p>
+        </div>
+
+        <div class="footer-column">
+            <h3>Useful Links</h3>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="team.html">Team</a></li>
+                <li><a href="updates.html">Updates</a></li>
+                <li><a href="partners.html">Our Partners</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h3>Social Media</h3>
+
+            <div class="social-links">
+                <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        <p>Total Visitors: ************</p>
+        <p>Developed by: sharuk</p>
+    </div>
+</footer>
+</body>
+</html>

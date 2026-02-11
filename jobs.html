@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jobs</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h2 class="page-title">Available Jobs</h2>
+  <div class="category-buttons">
+    <button data-category="All">All</button>
+    <button data-category="IT & Software">IT & Software</button>
+    <button data-category="Finance">Finance</button>
+    <button data-category="Marketing">Marketing</button>
+    <button data-category="Design">Design</button>
+    <button data-category="HR">HR</button>
+</div>
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Search jobs... (title, company, location)">
+  </div>
+
+  <div id="jobs-container" class="job-list"></div>
+
+  <script>
+
+
+let allJobs = [];  // store jobs globally
+
+// Fetch jobs from backend ONLY once
+async function loadJobs() {
+    try {
+        const response = await fetch("http://localhost:5050/api/jobs");
+        allJobs = await response.json();
+        displayFilteredJobs("All");  
+    } catch (error) {
+        console.error("Failed to load jobs:", error);
+    }
+}
+
+function filterJobs(jobs, search) {
+    return jobs.filter(job =>
+        job.title.toLowerCase().includes(search) ||
+        job.company.toLowerCase().includes(search) ||
+        job.location.toLowerCase().includes(search)
+    );
+}
+
+function filterByCategory(jobs, category) {
+    if (category === "All") return jobs;
+    return jobs.filter(job => job.category === category);
+}
+
+function displayFilteredJobs(selectedCategory) {
+
+    const searchTerm = document.getElementById("searchInput").value.toLowerCase();
+
+    let filtered = [...allJobs];
+
+    filtered = filterByCategory(filtered, selectedCategory);
+    filtered = filterJobs(filtered, searchTerm);
+
+    const container = document.getElementById("jobs-container");
+    container.innerHTML = "";
+
+    filtered.forEach(job => {
+        const card = `
+        <div class="job-card">
+            <h3>${job.title}</h3>
+            <p><span class="icon">🏢</span> ${job.company}</p>
+            <p><span class="icon">📍</span> ${job.location}</p>
+            <p><span class="icon">💰</span> ${job.salary}</p>
+            <a href="job_details.html?id=${job.id}" class="btn">View Details</a>
+        </div>`;
+        
+        container.innerHTML += card;
+    });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    // Search input listener
+    document.getElementById("searchInput").addEventListener("input", () => {
+        const activeBtn = document.querySelector(".category-buttons .active");
+        const activeCategory = activeBtn ? activeBtn.getAttribute("data-category") : "All";
+        displayFilteredJobs(activeCategory);
+    });
+
+    // Category buttons listener
+    document.querySelectorAll(".category-buttons button").forEach(btn => {
+        btn.addEventListener("click", () => {
+
+            document.querySelector(".category-buttons .active")?.classList.remove("active");
+            btn.classList.add("active");
+
+            const selectedCategory = btn.getAttribute("data-category");
+            displayFilteredJobs(selectedCategory);
+        });
+    });
+
+    loadJobs();
+});
+
+</script>
+</body>
+</html>
+
+

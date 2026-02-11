@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Details</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<div class="job-details-container">
+
+    <!-- LEFT SIDE -->
+    <div class="job-left">
+        <h2 id="job-title"></h2>
+
+        <div class="job-info-box">
+            <p><span class="icon">🏢</span> <strong>Company:</strong> <span id="job-company"></span></p>
+            <p><span class="icon">📍</span> <strong>Location:</strong> <span id="job-location"></span></p>
+            <p><span class="icon">💰</span> <strong>Salary:</strong> <span id="job-salary"></span></p>
+            <p><span class="icon">🧪</span> <strong>Experience:</strong> <span id="job-exp"></span></p>
+            <p><span class="icon">📝</span> <strong>Job Type:</strong> <span id="job-type"></span></p>
+        </div>
+
+        <h3>Description</h3>
+        <p id="job-description" class="job-desc"></p>
+
+        <a href="jobs.html" class="back-btn">← Back to Jobs</a>
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="job-right">
+        <div class="apply-box">
+            <h3>Interested in this role?</h3>
+            <p>Click below to apply for this job</p>
+
+            <!-- MUST BE EMPTY HREF → JS FILLS IT -->
+            <a href="#" class="details-btn">Apply Now</a>
+        </div>
+
+        <div class="company-box">
+            <h3>Company Info</h3>
+            <p><strong>Name:</strong> <span id="company-name"></span></p>
+            <p><strong>Location:</strong> <span id="company-location"></span></p>
+        </div>
+    </div>
+
+</div>
+
+<script>
+async function loadJobDetails() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const jobId = urlParams.get("id");
+
+    if (!jobId) {
+        document.body.innerHTML = "<h2>Invalid job ID</h2>";
+        return;
+    }
+
+    const response = await fetch(`http://localhost:5050/api/jobs/${jobId}`);
+    const job = await response.json();
+
+    if (job.error) {
+        document.body.innerHTML = "<h2>Job not found</h2>";
+        return;
+    }
+
+    document.getElementById("job-title").innerText = job.title;
+    document.getElementById("job-company").innerText = job.company;
+    document.getElementById("job-location").innerText = job.location;
+    document.getElementById("job-salary").innerText = job.salary;
+    document.getElementById("job-exp").innerText = job.experience ?? "—";
+    document.getElementById("job-type").innerText = job.type ?? "—";
+    document.getElementById("job-description").innerText = job.description;
+
+    // Correct apply button
+    document.querySelector(".details-btn").href = `apply.html?jobId=${job.id}`;
+}
+loadJobDetails();
+</script>
+
+</body>
+</html>
+
+
+

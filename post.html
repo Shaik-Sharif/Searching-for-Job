@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Job</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="admin-job-page">
+
+<div class="post-job-container">
+    <h2 class="post-job-title">Post a Job</h2>
+
+    <form id="postJobForm" class="post-job-form">
+
+        <div class="form-group">
+            <input type="text" id="company" placeholder="Company Name" required>
+        </div>
+
+        <div class="form-group">
+            <textarea id="description" placeholder="Description" required></textarea>
+        </div>
+
+        <div class="form-group">
+            <input type="text" id="location" placeholder="Location" required>
+        </div>
+
+        <div class="form-group">
+            <input type="text" id="title" placeholder="Job Title" required>
+        </div>
+
+        <div class="form-group">
+            <input type="text" id="salary" placeholder="Salary / Package" required>
+        </div>
+
+        <div class="form-group">
+            <input type="text" id="experience" placeholder="Experience (e.g., Fresher, 1–3 Years)" required>
+        </div>
+
+        <div class="form-group">
+            <input type="text" id="category" placeholder="Category (e.g., IT & Software)" required>
+        </div>
+
+        <button type="submit" class="post-job-btn">Post Job</button>
+    </form>
+</div>
+
+<script>
+// -------- POST JOB TO BACKEND --------
+document.getElementById("postJobForm").addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const job = {
+        company: document.getElementById("company").value,
+        description: document.getElementById("description").value,
+        location: document.getElementById("location").value,
+        title: document.getElementById("title").value,
+        salary: document.getElementById("salary").value,
+        experience: document.getElementById("experience").value,
+        category: document.getElementById("category").value
+    };
+
+    // Admin token from localStorage
+    const token = localStorage.getItem("adminToken");
+
+    if (!token) {
+        alert("Admin login required to post jobs");
+        return;
+    }
+
+    try {
+        const res = await fetch("/api/jobs", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + token
+            },
+            body: JSON.stringify(job)
+        });
+
+        const data = await res.json();
+
+        if (data.id) {
+            alert("Job posted successfully!");
+            window.location.href = "jobs.html";
+        } else {
+            alert("Error posting job");
+        }
+    } catch (err) {
+        console.error(err);
+        alert("Server error");
+    }
+});
+</script>
+
+</body>
+</html>
+
+
+

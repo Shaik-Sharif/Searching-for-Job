@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact Us</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+</head>
+
+<body>
+
+<section class="contact-page">
+
+    <h1 class="contact-title">Contact Us</h1>
+
+    <div class="contact-container">
+
+        <!-- LEFT: Contact Form -->
+        <div class="contact-form card-shadow">
+            <h2>Send Us a Message</h2>
+
+            <form id="contactForm">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <textarea rows="5" placeholder="Your Message..." required></textarea>
+                <button type="submit" class="contact-btn">Send Message</button>
+            </form>
+        </div>
+
+        <div class="contact-info card-shadow">
+            <h2>Get in Touch</h2>
+
+            <p><strong>Address:</strong><br>
+            Collectorate Compound, Vijayawada, NTR District</p>
+
+            <p><strong>Email:</strong><br>
+            <a href="mailto:info@vikasajobs.com" class="contact-link">info@vikasajobs.com</a></p>
+
+            <p><strong>Phone:</strong><br>
+            <a href="tel:+91 9392130830" class="contact-link">+91 9392130830</a></p>
+
+            <p><strong>WhatsApp:</strong><br>
+            <a href="https://wa.me/9392130830" target="_blank" class="whatsapp-btn">Chat on WhatsApp</a></p>
+
+            <h2>Find Us</h2>
+
+            <iframe
+               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3828.1234567890123!2d80.6260000000000!3d16.5100000000000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a34f0c123456789%3A0xabcdef123456789!2sCollectorate%20Vijayawada!5e0!3m2!1sen!2sin!4v0000000000000"
+                width="100%"
+                height="350"
+                style="border:0"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+
+            <h2>Office Hours</h2>
+            <p>Mon – Sat: 9:00 AM to 6:00 PM<br>
+               Sunday: Closed</p>
+
+            <h2>Follow Us</h2>
+            <div class="social-links">
+                <a href="https://www.facebook.com" target="_blank"><i class="fab fa-facebook fa-2x"></i></a>
+                <a href="https://www.twitter.com" target="_blank"><i class="fab fa-twitter fa-2x"></i></a>
+                <a href="https://www.linkedin.com" target="_blank"><i class="fab fa-linkedin fa-2x"></i></a>
+                <a href="https://www.youtube.com" target="_blank"><i class="fab fa-youtube fa-2x"></i></a>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<script>
+document.getElementById("contactForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    alert("Message Submitted Successfully!");
+});
+</script>
+<footer class="footer-section">
+    <div class="footer-container">
+
+        <div class="footer-column">
+            <h3>Contact Information</h3>
+            <p><strong>Project Director,</strong><br>
+            VIKASA, Collectorate,<br>
+            VIJAYAWADA<br>
+            NTR District,<br>
+            Andhra Pradesh.</p>
+        </div>
+
+        <div class="footer-column">
+            <h3>Useful Links</h3>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="team.html">Team</a></li>
+                <li><a href="updates.html">Updates</a></li>
+                <li><a href="partners.html">Our Partners</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h3>Social Media</h3>
+
+            <div class="social-links">
+                <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        <p>Total Visitors: ************</p>
+        <p>Developed by: sharuk</p>
+    </div>
+</footer>
+
+</body>
+</html>

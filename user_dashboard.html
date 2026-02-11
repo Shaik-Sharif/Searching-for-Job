@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="dashboard-container">
+        
+        <div class="dashboard-header">
+            <h2>Welcome, <span id="userName">User</span></h2>
+            <button id="logoutBtn" class="logout-btn">Logout</button>
+        </div>
+
+        <div class="section-box">
+            <h3>Your Details</h3>
+            <p><strong>Name:</strong> <span id="name"></span></p>
+            <p><strong>Email:</strong> <span id="email"></span></p>
+        </div>
+
+        <div class="section-box">
+            <h3>Your Applications</h3>
+            <div id="appsList">Loading...</div>
+        </div>
+
+
+    </div>
+
+<script>
+// PROTECT PAGE
+const token = localStorage.getItem("userToken");
+if (!token) window.location.href = "user_login.html";
+
+// LOAD USER INFO
+const user = JSON.parse(localStorage.getItem("userData"));
+document.getElementById("userName").textContent = user?.name || "User";
+document.getElementById("name").textContent = user?.name || "-";
+document.getElementById("email").textContent = user?.email || "-";
+
+// LOGOUT
+document.getElementById("logoutBtn").addEventListener("click", () => {
+    localStorage.removeItem("userToken");
+    localStorage.removeItem("userData");
+    window.location.href = "user_login.html";
+});
+  
+// ============== LOAD USER APPLICATIONS ==============
+async function loadApplications() {
+    const email = user?.email;
+    if (!email) return;
+
+    const res = await fetch("/api/user/applications", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email })
+    });
+
+    const apps = await res.json();
+    const box = document.getElementById("appsList");
+
+    if (apps.length === 0) {
+        box.innerHTML = `<p>You haven't applied for any jobs yet.</p>`;
+        return;
+    }
+
+    // Build list
+    box.innerHTML = `
+        <ul style="list-style:none;padding:0;">
+            ${apps.map(app => `
+                <li style="
+                    margin-bottom:15px;
+                    padding:15px;
+                    background:#fff;
+                    border:1px solid #ddd;
+                    border-radius:5px;
+                ">
+                    <strong>Application No:</strong> ${app.applicationNumber}<br>
+                    <strong>Job ID:</strong> ${app.jobId}<br>
+                    <strong>Applied On:</strong> ${new Date(app.createdAt).toLocaleString()}<br>
+                    <a href="${app.resumeUrl}" target="_blank">View Resume</a>
+                </li>
+            `).join("")}
+        </ul>
+    `;
+}
+
+loadApplications();
+
+
+// BLOCK BACK BUTTON
+window.history.pushState(null, "", window.location.href);
+window.onpopstate = () => {
+    window.history.pushState(null, "", window.location.href);
+};
+</script>
+
+</body>
+</html>

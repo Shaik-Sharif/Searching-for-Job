@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h1>Backend Test</h1>
+
+<script>
+fetch("http://localhost:5050/api/hello")
+  .then(res => res.json())
+  .then(data => alert("Backend says: " + data.message))
+  .catch(err => alert("Error: " + err));
+</script>
+
+</body>
+</html>

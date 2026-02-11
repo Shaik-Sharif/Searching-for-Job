@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "title": "TSPSC Group 4 Certificate Verification Schedule Released",
+    "date": "18-Nov-2025",
+    "category": "Government",
+    "description": "TSPSC released the verification schedule for Group 4 candidates. Candidates should download their call letters.",
+    "pdf": "assets/pdfs/group4.pdf"
+  },
+  {
+    "id": 2,
+    "title": "Infosys Off Campus Hiring 2025 – Freshers",
+    "date": "16-Nov-2025",
+    "category": "Private",
+    "description": "Infosys is conducting Off Campus Drive for 2025 batch. Apply before deadline.",
+    "pdf": ""
+  },
+  {
+    "id": 3,
+    "title": "SSC GD Answer Key Released",
+    "date": "15-Nov-2025",
+    "category": "Results",
+    "description": "SSC has released the tentative answer key for GD Constable Examination.",
+    "pdf": "assets/pdfs/ssc-gd-key.pdf"
+  }
+]
